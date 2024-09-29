@@ -12,24 +12,15 @@ GEMINI_API = os.getenv("GEMINI")
 intents = discord.Intents.default()
 intents.message_content = True
 
-client = discord.Client(intents=intents)
 bot = commands.Bot(command_prefix='$', intents=intents)
 
 genai.configure(api_key = GEMINI_API)
 
-@client.event
-async def on_ready():
-    print(f'We have logged in as {client.user}')
-
-@client.event
-async def on_message(message):
-    if message.author == client.user:
-        return
-
-    if message.content.startswith('$'):
+@bot.command()
+async def prompt(ctx, *, msg):
         model = genai.GenerativeModel("gemini-1.5-flash")
-        response = model.generate_content(message.content[1:] + " Ensure that your response is less than 1000 characters in length.")
-        await message.channel.send(response.text)
+        response = model.generate_content(msg + " Ensure that your response is less than 1000 characters in length.")
+        await ctx.channel.send(response.text)
 
 @bot.command()
 async def join(ctx):
