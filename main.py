@@ -13,7 +13,10 @@ genai.configure(api_key = GEMINI_API)
 
 screenshot_file_path = "tmp/temp.png"
 audio_file_path = "tmp/temp.mp3"
-prompt = "You are a backseat gamer. Playfully suggest something I should do. Please, keep your response minimal and under 1 sentences."
+#prompt = "You are a backseat gamer. Playfully suggest something I should do. Please, keep your response minimal and under 1 sentences."
+prompt = "Playfully suggest something I should do. Keep your response minimal and under 1 sentences."
+
+tokens = []
 
 def commentary():
     threading.Timer(6.0, commentary).start()
@@ -35,7 +38,10 @@ def commentary():
     )
     text_to_speech.save(audio_file_path)
 
-    audio = pyglet.media.load(audio_file_path, streaming=False)
+    audio = pyglet.media.load(
+        audio_file_path,
+        streaming = False
+    )
     audio.play().pitch = 1.3
 
 if __name__ == "__main__":
